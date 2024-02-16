@@ -1,0 +1,66 @@
+{% include "header.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('{{post.img_url}}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{post.title}}</h1>
+            <h2 class="subheading">{{post.subtitle}}</h2>
+            <span class="meta">Posted by
+              <a href="#">{{post.author.name}}</a>
+              on {{post.date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Content -->
+  <article>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            {{ post.body|safe }}
+          <hr>
+
+            {% if current_user.id == 1 %}
+              <div class="clearfix">
+              <a class="btn btn-primary float-right" href="{{url_for('edit_post', post_id=post.id)}}">Edit Post</a>
+              </div>
+            {% endif %}
+
+
+
+<!--           Comments Area -->
+           {{ ckeditor.load() }}
+          {{ ckeditor.config(name='comment_text') }}
+          {{ wtf.quick_form(comment_form, novalidate=True, button_map={"submit": "primary"}) }}
+
+          <div class="col-lg-8 col-md-10 mx-auto comment">
+              <ul class="commentList">
+                {% for comment in post.comments %}
+                <li>
+                    <div class="commenterImage">
+                      <img src="data:image/png;base64,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"/>
+                    </div>
+                    <div class="commentText">
+                      <p>{{ comment.text|safe }}</p>
+                      <span class="date sub-text">{{ comment.comment_author.name }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+              </ul>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <hr>
+{% include "footer.html" %}
