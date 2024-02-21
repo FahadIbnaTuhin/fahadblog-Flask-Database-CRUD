@@ -2,7 +2,7 @@
 
 Welcome to Fahad's Blog! This web application was built as a learning project, incorporating various technologies and features.
 
-<a href="https://fahads-blog.onrender.com/" target="_blank">Visit my website</a>
+[Visit my website](https://fahads-blog.onrender.com/){:target="_blank"}
 
 ## Technologies Used
 - **Flask:** Web application framework
